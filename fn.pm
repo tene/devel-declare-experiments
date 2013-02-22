@@ -15,6 +15,8 @@ sub import {
         {
             fn => {
                 const => \&parser,
+                rv2cv => sub { use Data::Dumper; print STDERR '» ' . Dumper(\@_)},
+                check => sub { use Data::Dumper; print STDERR '» ' . Dumper(\@_)},
             },
         }
     );
@@ -70,7 +72,7 @@ sub parser {
     $ctx->init(@_);
 
     print STDERR '» ', $ctx->fmt_offset('|');
-    $ctx->skip_declarator();
+    $ctx->skip_word();
     print STDERR '» ', $ctx->fmt_offset('|');
     my $name = $ctx->strip_name;
     print STDERR '» ', $ctx->fmt_offset('|');
